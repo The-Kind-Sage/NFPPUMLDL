@@ -1,0 +1,5 @@
+tft_results/
+lightning_logs/
+__pycache__/
+.idea/
+logs/
