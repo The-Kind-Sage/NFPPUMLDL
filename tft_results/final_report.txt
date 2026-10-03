@@ -1,0 +1,124 @@
+==============================================================================
+NEPAL FOOD PRICE FORECASTING - TFT FINAL REPORT
+generated : 2026-09-29 17:23:11
+mode      : eval
+output dir: tft_results
+==============================================================================
+
+[CONFIG]
+  lookback=24 mo | horizon=3 mo | batch=128 | hidden=64 | heads=4
+  max_epochs=4 | epochs_run=2 | early_stop_patience=6 | seed=42
+  split: train < 2024-01-15 | val = 2024 | test >= 2025-01-15 (holdout)
+  dropout=0.25 | lr=0.0005 | weight_decay=0.0001
+  target = none | loss = WeightedQuantileLoss over 7 quantiles; reported prediction = median
+
+[1] PER-EPOCH TRAINING REPORT (2 epochs, live-printed during run)
+  epoch  train_loss   val_loss    val_MAE   val_RMSE        lr     sec  note
+  ----------------------------------------------------------------------------
+      1      5.9864    20.8472       21.3       25.1   0.00050     3.2
+      2      4.9109    18.7353       19.5       23.2   0.00050     2.9  *new best* best@2.0 stale=0/6
+
+  best epoch 2: val_loss=18.7353 val_MAE=19.5 val_RMSE=23.2 NPR
+
+[2] FINAL TEST METRICS (holdout 2025-01 .. 2026-08, prices in NPR)
+  overall_pooled             MAE=17.59  RMSE=31.38  MAPE=12.10%  R2=0.9411  n=40491
+  horizon_h1                 MAE=15.97  RMSE=29.56  MAPE=11.11%  R2=0.9479  n=13497
+  horizon_h2                 MAE=18.24  RMSE=32.52  MAPE=12.42%  R2=0.9367  n=13497
+  horizon_h3                 MAE=18.56  RMSE=31.99  MAPE=12.75%  R2=0.9386  n=13497
+
+  baseline_persistence:
+  horizon_h1                 MAE=7.34  RMSE=18.42  MAPE=5.92%  R2=0.9798  n=13497
+  horizon_h2                 MAE=11.27  RMSE=24.56  MAPE=8.79%  R2=0.9639  n=13497
+  horizon_h3                 MAE=14.47  RMSE=30.85  MAPE=10.77%  R2=0.9429  n=13497
+  overall_pooled             MAE=11.03  RMSE=25.13  MAPE=8.50%  R2=0.9622  n=40491
+
+  baseline_seasonal_naive:
+  horizon_h1                 MAE=20.73  RMSE=36.16  MAPE=13.17%  R2=0.9220  n=13497
+  horizon_h2                 MAE=21.50  RMSE=38.80  MAPE=13.10%  R2=0.9098  n=13497
+  horizon_h3                 MAE=21.95  RMSE=38.28  MAPE=13.09%  R2=0.9121  n=13497
+  overall_pooled             MAE=21.40  RMSE=37.77  MAPE=13.12%  R2=0.9147  n=40491
+
+  baseline_rolling_one_step:
+  horizon_h1                 MAE=7.34  RMSE=18.42  MAPE=5.92%  R2=0.9798  n=13497
+  horizon_h2                 MAE=8.05  RMSE=19.64  MAPE=6.27%  R2=0.9769  n=13497
+  horizon_h3                 MAE=9.00  RMSE=22.87  MAPE=6.44%  R2=0.9686  n=13497
+  overall_pooled             MAE=8.13  RMSE=20.40  MAPE=6.21%  R2=0.9751  n=40491
+
+  skill_vs_persistence:
+    horizon_h1               -1.176
+    horizon_h2               -0.618
+    horizon_h3               -0.283
+    overall_pooled           -0.595
+
+  naive_row_level_reference:
+  naive_last_value           MAE=8.12  RMSE=21.09  MAPE=6.64%  R2=0.9730  n=8987
+  naive_seasonal_12          MAE=20.81  RMSE=37.54  MAPE=13.61%  R2=0.9144  n=8987
+
+  interval_calibration:
+    coverage_80_overall      +0.655
+    mean_width_overall       +42.093
+    quantile_crossing_cells  +142.000
+    quantile_crossing_pct    +0.351
+    coverage_80_h1           +0.697
+    mean_width_h1            +41.505
+    coverage_80_h2           +0.639
+    mean_width_h2            +42.004
+    coverage_80_h3           +0.629
+    mean_width_h3            +42.771
+
+  baseline_* = same windows / same rows / same information as the TFT
+              (fixes the old naive-vs-TFT row mismatch).
+  skill_vs_persistence > 0 -> TFT beats persistence on that horizon.
+  rolling_one_step peeks at actuals for h>1: an upper bar, not a rival.
+  naive_row_level_reference = legacy row-level h1 numbers (different n).
+
+[3] PER-COMMODITY BREAKDOWN (8 commodities)
+  commodity                    MAE      RMSE    MAPE%        R2       n
+  Apples                     47.06     73.17    17.65    0.0141    2160
+  Bananas                    33.38     54.21    16.59    0.4537    2160
+  Beans (black)              24.66     32.31    10.79   -1.3036    2160
+  Cabbage                    12.38     24.73    21.71   -0.0276    2160
+  Chickpeas                  13.87     18.60     8.47    0.2541    2160
+  Eggs                        2.08      2.85     8.69    0.3392    2160
+  Lentils (broken)           10.52     13.98     5.83    0.7006    2160
+  Meat (chicken)             21.86     28.95     4.90    0.9078    2160
+
+[4] FILES IN THIS RUN
+  actual_vs_predicted.png
+  benchmark_20260929_004231
+  benchmark_20260929_horizon_switch
+  checkpoints
+  d3_prep
+  d3_seed42
+  d3_smoke
+  final_report.txt
+  finetune_20260929_002853
+  future_forecast.csv
+  interpretation_attention.png
+  interpretation_decoder_importance.png
+  interpretation_encoder_importance.png
+  interpretation_static_importance.png
+  interval_calibration.png
+  metrics.json
+  per_commodity_mae.png
+  per_commodity_metrics.csv
+  prev_run_h128_e12
+  prev_run_h64_e4_lr1e3
+  prev_run_h64_e4_lr5e4
+  prev_run_h64_e4_lr5e4_regen_nondet
+  prev_run_log_h64
+  processed_monthly_panel.csv
+  residual_distribution.png
+  rolling_backtest_20260929_004855
+  rolling_backtest_20260929_004910
+  rolling_backtest_20260929_005247
+  rolling_backtest_20260929_005356
+  sample_forecast_0.png
+  sample_forecast_13496.png
+  sample_forecast_189.png
+  sample_forecast_6748.png
+  sample_forecast_95.png
+  test_predictions.npz
+  training_curves.png
+  training_history.csv
+  training_history.json
