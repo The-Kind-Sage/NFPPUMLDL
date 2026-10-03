@@ -1,0 +1,222 @@
+{
+  "starting_checkpoint": "tft_results\\checkpoints\\epoch=2-step=645-v5.ckpt",
+  "selection_metric": "2024 validation median-forecast MAE (NPR)",
+  "trials": {
+    "low_lr": {
+      "settings": {
+        "learning_rate": 5e-05,
+        "weight_decay": 0.0001
+      },
+      "epochs": 2,
+      "checkpoints": [
+        {
+          "checkpoint": "tft_results\\finetune_20260929_002853\\low_lr\\checkpoints\\epochepoch=00.ckpt",
+          "validation_MAE": 17.575313568115234
+        },
+        {
+          "checkpoint": "tft_results\\finetune_20260929_002853\\low_lr\\checkpoints\\epochepoch=01.ckpt",
+          "validation_MAE": 17.506757736206055
+        }
+      ],
+      "best": {
+        "checkpoint": "tft_results\\finetune_20260929_002853\\low_lr\\checkpoints\\epochepoch=01.ckpt",
+        "validation_MAE": 17.506757736206055
+      }
+    },
+    "regularized": {
+      "settings": {
+        "learning_rate": 0.0001,
+        "weight_decay": 0.0005,
+        "dropout": 0.4
+      },
+      "epochs": 2,
+      "checkpoints": [
+        {
+          "checkpoint": "tft_results\\finetune_20260929_002853\\regularized\\checkpoints\\epochepoch=00.ckpt",
+          "validation_MAE": 17.36332893371582
+        },
+        {
+          "checkpoint": "tft_results\\finetune_20260929_002853\\regularized\\checkpoints\\epochepoch=01.ckpt",
+          "validation_MAE": 17.462074279785156
+        }
+      ],
+      "best": {
+        "checkpoint": "tft_results\\finetune_20260929_002853\\regularized\\checkpoints\\epochepoch=00.ckpt",
+        "validation_MAE": 17.36332893371582
+      }
+    },
+    "median_focused": {
+      "settings": {
+        "learning_rate": 5e-05,
+        "weight_decay": 0.0001,
+        "quantile_weights": [
+          0.25,
+          0.5,
+          1.0,
+          4.0,
+          1.0,
+          0.5,
+          0.25
+        ]
+      },
+      "epochs": 2,
+      "checkpoints": [
+        {
+          "checkpoint": "tft_results\\finetune_20260929_002853\\median_focused\\checkpoints\\epochepoch=00.ckpt",
+          "validation_MAE": 17.574481964111328
+        },
+        {
+          "checkpoint": "tft_results\\finetune_20260929_002853\\median_focused\\checkpoints\\epochepoch=01.ckpt",
+          "validation_MAE": 17.369714736938477
+        }
+      ],
+      "best": {
+        "checkpoint": "tft_results\\finetune_20260929_002853\\median_focused\\checkpoints\\epochepoch=01.ckpt",
+        "validation_MAE": 17.369714736938477
+      }
+    }
+  },
+  "winner": "regularized",
+  "winner_test_metrics": {
+    "overall_pooled": {
+      "MAE": 19.323026697992063,
+      "RMSE": 34.068333603070464,
+      "MAPE_%": 13.241622560438241,
+      "R2": 0.9305496725587573,
+      "n": 40491
+    },
+    "horizon_h1": {
+      "MAE": 17.521860044250012,
+      "RMSE": 31.785421541336348,
+      "MAPE_%": 12.109931585041094,
+      "R2": 0.9397194937681642,
+      "n": 13497
+    },
+    "horizon_h2": {
+      "MAE": 19.81979285525138,
+      "RMSE": 34.84280956570938,
+      "MAPE_%": 13.562775892899834,
+      "R2": 0.9273026786004231,
+      "n": 13497
+    },
+    "horizon_h3": {
+      "MAE": 20.627427194474794,
+      "RMSE": 35.462933641727425,
+      "MAPE_%": 14.052160203373798,
+      "R2": 0.9245846588449659,
+      "n": 13497
+    },
+    "baseline_persistence": {
+      "horizon_h1": {
+        "MAE": 7.338853078461881,
+        "RMSE": 18.42237515360507,
+        "MAPE_%": 5.920680410779651,
+        "R2": 0.9797505988521613,
+        "n": 13497
+      },
+      "horizon_h2": {
+        "MAE": 11.270986145069275,
+        "RMSE": 24.561460562458794,
+        "MAPE_%": 8.79185082453051,
+        "R2": 0.963875615824406,
+        "n": 13497
+      },
+      "horizon_h3": {
+        "MAE": 14.465671383010605,
+        "RMSE": 30.847527548368166,
+        "MAPE_%": 10.772613981846531,
+        "R2": 0.9429374595561496,
+        "n": 13497
+      },
+      "overall_pooled": {
+        "MAE": 11.025170202180586,
+        "RMSE": 25.12780138351886,
+        "MAPE_%": 8.495048405718897,
+        "R2": 0.9622182999025329,
+        "n": 40491
+      }
+    },
+    "baseline_seasonal_naive": {
+      "horizon_h1": {
+        "MAE": 20.73345928724902,
+        "RMSE": 36.163492754866006,
+        "MAPE_%": 13.171148259817148,
+        "R2": 0.9219699872407113,
+        "n": 13497
+      },
+      "horizon_h2": {
+        "MAE": 21.50439603862587,
+        "RMSE": 38.80155737949931,
+        "MAPE_%": 13.095297613739671,
+        "R2": 0.9098448813897204,
+        "n": 13497
+      },
+      "horizon_h3": {
+        "MAE": 21.952298041540097,
+        "RMSE": 38.278473172117025,
+        "MAPE_%": 13.088294436045011,
+        "R2": 0.9121342552708334,
+        "n": 13497
+      },
+      "overall_pooled": {
+        "MAE": 21.39671778913833,
+        "RMSE": 37.765065742889526,
+        "MAPE_%": 13.118246769867275,
+        "R2": 0.9146599279376184,
+        "n": 40491
+      }
+    },
+    "baseline_rolling_one_step": {
+      "horizon_h1": {
+        "MAE": 7.338853078461881,
+        "RMSE": 18.42237515360507,
+        "MAPE_%": 5.920680410779651,
+        "R2": 0.9797505988521613,
+        "n": 13497
+      },
+      "horizon_h2": {
+        "MAE": 8.053493368896792,
+        "RMSE": 19.63708449091543,
+        "MAPE_%": 6.267055904825734,
+        "R2": 0.9769088218409976,
+        "n": 13497
+      },
+      "horizon_h3": {
+        "MAE": 9.001333629695488,
+        "RMSE": 22.87051638292508,
+        "MAPE_%": 6.437312063215985,
+        "R2": 0.9686337700427775,
+        "n": 13497
+      },
+      "overall_pooled": {
+        "MAE": 8.131226692351387,
+        "RMSE": 20.396564361228105,
+        "MAPE_%": 6.208349459607122,
+        "R2": 0.9751064660016631,
+        "n": 40491
+      }
+    },
+    "skill_vs_persistence": {
+      "horizon_h1": -1.38754746237846,
+      "horizon_h2": -0.7584790363638194,
+      "horizon_h3": -0.42595712624171345,
+      "overall_pooled": -0.7526284260147118
+    },
+    "naive_row_level_reference": {
+      "naive_last_value": {
+        "MAE": 8.121119394681207,
+        "RMSE": 21.090337476058757,
+        "MAPE_%": 6.6406414968203435,
+        "R2": 0.9729608574808725,
+        "n": 8987
+      },
+      "naive_seasonal_12": {
+        "MAE": 20.810522606728238,
+        "RMSE": 37.535964439600974,
+        "MAPE_%": 13.606718221120232,
+        "R2": 0.9143512528454774,
+        "n": 8987
+      }
+    }
+  }
+}
